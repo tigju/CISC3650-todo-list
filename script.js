@@ -74,7 +74,16 @@ listsContainer.addEventListener('click', e => {
             implist.important = false
         }
         saveAndRender()
-        console.log(implist)
+    }
+    else if (item.tagName.toLowerCase() === 'input') {
+        const checkOffListId = item.id
+        let l = lists.filter(list => list.id == checkOffListId)[0]  
+        l.complete = item.checked
+        if (l.checked === true) {
+            audio.play()
+        }
+        save()
+
     }
 })
 
@@ -178,7 +187,7 @@ addNewTask.addEventListener('submit', e => {
 
 
 function createList(name, dueDate) {
-    return { id: Date.now().toString(), name: name, tasks: [], created: Date.now(), dueDate: dueDate, important: false}
+    return { id: Date.now().toString(), name: name, complete: false, tasks: [], created: Date.now(), dueDate: dueDate, important: false}
 }
 
 function createTask(name, dueDate) {
@@ -242,6 +251,7 @@ function renderTasks(selectedList) {
         taskLi.appendChild(importantButton)
 
         const completeButton = document.createElement('input')
+        completeButton.classList.add("input-task")
         completeButton.setAttribute("type", "checkbox");
         completeButton.id = task.id
         completeButton.checked = task.complete
@@ -318,13 +328,28 @@ function renderLists() {
         }
 
         importantButton.setAttribute("data-important-task-button", "")
-        div.appendChild(importantButton)
+        listElement.appendChild(importantButton)
 
+        const completeButton = document.createElement('input')
+        completeButton.classList.add("input-list")
+        completeButton.setAttribute("type", "checkbox");
+        completeButton.id = list.id
+        completeButton.checked = list.complete
+
+        // custom checkbox
+        const custCheckbox = document.createElement('span')
+        custCheckbox.classList.add('complete-btn')
+        const listLabel = document.createElement('label')
+        listLabel.htmlFor = list.id
+        listLabel.appendChild(custCheckbox)
+        
+        div.appendChild(completeButton)
+        div.appendChild(listLabel)
         // list text
         spanText = document.createElement('span')
         spanText.classList.add('span-text')
         spanText.innerText = list.name
-        div.append(spanText)
+        listLabel.append(spanText)
         if (list.id === selectedListId) {
             listElement.classList.add('active-list')
         }
@@ -334,14 +359,14 @@ function renderLists() {
             const listDue = document.createElement('span')
             listDue.classList.add("list-due")
             listDue.innerText = `Due: ${convertDate(list.dueDate)}`
-            div.appendChild(listDue)
+            listLabel.appendChild(listDue)
         }
 
         // create span to hold created date 
         const listCreated = document.createElement('span')
         listCreated.classList.add("list-created")
         listCreated.innerText = `Created: ${convertDate(list.created)}`
-        div.appendChild(listCreated)
+        listLabel.appendChild(listCreated)
 
         listElement.appendChild(div)
 
