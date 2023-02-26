@@ -79,7 +79,7 @@ listsContainer.addEventListener('click', e => {
         const checkOffListId = item.id
         let l = lists.filter(list => list.id == checkOffListId)[0]  
         l.complete = item.checked
-        if (l.checked === true) {
+        if (l.complete === true) {
             audio.play()
         }
         save()
