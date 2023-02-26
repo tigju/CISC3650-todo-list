@@ -66,7 +66,8 @@ listsContainer.addEventListener('click', e => {
         saveAndRender()    
     }
     else if (item.classList[0] === 'important-btn') {
-        const importantListId = item.parentElement.parentElement.dataset.listId
+        const importantListId = item.parentElement.dataset.listId
+        console.log(importantListId)
         let implist = lists.filter(list => list.id == importantListId)[0]
         if (implist.important == false) {
             implist.important = true
