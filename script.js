@@ -18,6 +18,8 @@ const ListDueDate = document.querySelector('[data-list-due-date]')
 const TaskDueDate = document.querySelector('[data-task-due-date]')
 const importantFlag = document.querySelector('[data-list-important-flag]')
 
+const audio = new Audio("mouseClick.mp3");
+
 // Create local storage to save lists and tasks when page is refreshed
 const LOCAL_STORAGE_LIST_KEY = 'task.lists'
 const LOCAL_STORAGE_SELECTED_LIST_ID_KEY = 'task.selectedListId'
@@ -91,7 +93,7 @@ tasksContainer.addEventListener('click', e => {
     else if (item.tagName.toLowerCase() === 'span' || item.tagName.toLowerCase() === 'label' || item.tagName.toLowerCase() === 'div') {
         let parent = item
         if (item.tagName.toLowerCase() === 'span') {
-                parent = item.parentElement.parentElement.firstChild
+            parent = item.parentElement.parentElement.firstChild
         } 
         else if (item.tagName.toLowerCase() === 'div') {
             parent = item.firstChild
@@ -106,6 +108,7 @@ tasksContainer.addEventListener('click', e => {
         }
         else {
             completebtn.checked = true
+            audio.play();
         }
     
         selectedTask.complete = completebtn.checked

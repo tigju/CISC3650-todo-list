@@ -21,6 +21,10 @@ header, .task-count {
     align-items: center;
 }
 
+ol, ul {
+    padding-left: 0;
+}
+
 
 .delete-buttons ,.list-title, [data-new-list-form], [data-new-task-form], .ul-wrapper, .todo-header, .list-title, .todo-header {
     min-height: 10vh;
